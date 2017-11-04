@@ -1,0 +1,10 @@
+---
+- name: Setup SSH settings
+  template:
+    src: "sshd_conf.j2"
+    dest: "/etc/ssh/sshd_config"
+
+- name: Restart SSH service
+  service:
+    name: ssh
+    state: restarted
