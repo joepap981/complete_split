@@ -12,10 +12,6 @@
   service:
     name: mysql
     state: restarted
-- name: Restart mongod
-  service:
-    name: mongod
-    state: restarted
 - name: Set memcached address
   lineinfile:
     dest: /etc/memcached.conf

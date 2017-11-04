@@ -52,7 +52,7 @@
   vars:
     MYSQL_SERVER_ID: 2
   template:
-    src: "mysqld.conf.j2"
+    src: "mysqld.cnf.j2"
     dest: "/etc/mysql/mysql.cnf.d/mysqld.cnf"
     backup: yes
   delegate_to: "{{ groups['mysql_slave'][0] }}"

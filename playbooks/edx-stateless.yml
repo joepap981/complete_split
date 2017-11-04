@@ -8,7 +8,7 @@
   sudo: True
   gather_facts: True
   vars_files:
-    - "../server_var.yml"
+    - "../server_vars.yml"
 
   vars:
     migrate_db: 'yes'
@@ -88,7 +88,7 @@
 - name: MySQL Replication
   hosts: datastores
   vars_files:
-    - ../server_var.yml
+    - ../server_vars.yml
   tasks:
     - include: replication.yml
       when: MYSQL_REPLICATION == true
