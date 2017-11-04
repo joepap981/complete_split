@@ -82,6 +82,10 @@ log_error = /var/log/mysql/error.log
 #       other settings you may need to change.
 server-id              = {{ MYSQL_SERVER_ID }}
 log_bin                = {{ MYSQL_LOG_BIN }}
+
+{% if slave %}
+relay-log              = {{ MYSQL_RELAY_LOG }}
+{% endif %}
 expire_logs_days        = 10
 max_binlog_size   = 100M
 

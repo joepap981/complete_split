@@ -7,6 +7,9 @@
     state: stopped
 
 - name: Copy configuration template
+  vars:
+    MYSQL_SERVER_ID: 1
+    slave: false
   template:
     src: "mysqld.cnf.j2"
     dest: "/etc/mysql/mysql.conf.d/mysqld.cnf"
@@ -48,19 +51,20 @@
     - mysql-server-5.6
     - python-mysqldb
 
-- name: Copy configuration template for slave
-  vars:
-    MYSQL_SERVER_ID: 2
-  template:
-    src: "mysqld.cnf.j2"
-    dest: "/etc/mysql/mysql.cnf.d/mysqld.cnf"
-    backup: yes
-  delegate_to: "{{ groups['mysql_slave'][0] }}"
-
 - name: Start mySQL
   service:
     name: mysql
     state: started
+  delegate_to: "{{ groups['mysql_slave'][0] }}"
+
+- name: Copy configuration template for slave
+  vars:
+    MYSQL_SERVER_ID: 2
+    slave: true
+  template:
+    src: "mysqld.cnf.j2"
+    dest: "/etc/mysql/mysql.conf.d/mysqld.cnf"
+    backup: yes
   delegate_to: "{{ groups['mysql_slave'][0] }}"
 
 - name: Ensure Anonymous user(s) does not exist
@@ -80,10 +84,16 @@
     target: /tmp/migrate.sql
   delegate_to: "{{ groups['mysql_slave'][0] }}"
 
+- name: restart mySQL
+  service:
+    name: mysql
+    state: restarted
+  delegate_to: "{{ groups['mysql_slave'][0] }}"
+
 - name: Get Master Status
-  mysql_replication: mode=getmaster
+  mysql_replication: 
+    mode: getmaster
   register: master_status
-  delegate_to: "{{ groups['user_db'][0] }}"
 
 - name: Define master in slave
   mysql_replication: mode=changemaster master_host="{{ groups['user_db'][0] }}" master_log_file={{ master_status.File }} master_log_pos={{ master_status.Position }} master_user="{{ MYSQL_SLAVE_USER }}" master_password="{{ MYSQL_SLAVE_PASSWORD }}"
