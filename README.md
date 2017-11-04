@@ -1,4 +1,2 @@
-# small_deployment
-Simple two server deployment for Open edX
-
-*added mysql replication server
+# complete_split
+Fully scaled setup of the Open edX platform
