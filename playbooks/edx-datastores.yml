@@ -10,7 +10,7 @@
 #    EDXLOCAL_MYSQL_ALLOWED_HOST: "203.252.119.102"
 #    rabbitmq_ip: "{{ groups['datastores'][0] }}"
   vars_files:
-    - "../server_var.yml"
+    - "../server_vars.yml"
     - "/var/tmp/configuration/playbooks/roles/edxapp/defaults/main.yml"
     - "/var/tmp/configuration/playbooks/roles/forum/defaults/main.yml"
     - "/var/tmp/configuration/playbooks/roles/xqueue/defaults/main.yml"
@@ -35,15 +35,13 @@
   hosts: course_db
   become: true
   gather_facts: True
-  vars_files:
-    - "../server_var.yml"
 
   vars:
     STATELESS_HOST: "{{ groups['stateless'][0] }}"
     rabbitmq_ip: "{{ groups['course_db'][0] }}"
 
   vars_files:
-    - "../server_var.yml"
+    - "../server_vars.yml"
     - "/var/tmp/configuration/playbooks/roles/edxapp/defaults/main.yml"
     - "/var/tmp/configuration/playbooks/roles/forum/defaults/main.yml"
     - "/var/tmp/configuration/playbooks/roles/xqueue/defaults/main.yml"

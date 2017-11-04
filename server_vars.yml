@@ -1,7 +1,4 @@
 ---
-#Server Security
-UBUNTU_ROOT_PASSWORD: edx
-
 #Platform settings
 EDXAPP_PLATFORM_NAME: 'HandongX'
 EDXAPP_PLATFORM_DESCRIPTION: 'Handong MOOC'

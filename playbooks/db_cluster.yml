@@ -1,0 +1,7 @@
+---
+- name: Cluster MySQL
+  hosts: user_db
+  vars_files:
+    - ../server_vars.yml
+  roles:
+    - mysql_cluster

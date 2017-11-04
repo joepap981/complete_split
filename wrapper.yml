@@ -1,0 +1,6 @@
+---
+- name: test
+  hosts: localhost
+  connection: local
+  roles:
+    - { role: ~/Desktop/complete_split/playbooks/roles/mysql_cluster }
