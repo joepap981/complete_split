@@ -84,12 +84,3 @@
     - role: newrelic
       when: COMMON_ENABLE_NEWRELIC
 
-#mySQL replication
-- name: MySQL Replication
-  hosts: datastores
-  vars_files:
-    - ../server_vars.yml
-  tasks:
-    - include: replication.yml
-      when: MYSQL_REPLICATION == true
-
