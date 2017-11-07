@@ -1,0 +1,21 @@
+---
+- name: Stop mongod service
+  service:
+    name: mongod
+    state: stopped
+
+- name: Copy configuration template
+  template:
+    src: "mongodb.conf.j2"
+    dest: "/etc/mongod.conf"
+    backup: yes
+
+- name: Start mongo service
+  service:
+    name: mongod
+    state: started
+
+- name: Wait for mongo server to start
+  wait_for:
+    port: 27017
+    delay: 2

@@ -1,0 +1,24 @@
+---
+#adapted from edx configuration
+- name: Copy mongodb key file from course_db to master
+  command: scp root@"{{ groups['course_db'][0] }}":"{{ mongo_key_file }}" "{{ mongo_key_file }}"
+  delegate_to: "{{ groups['localhost'][0] }}"
+
+- name: Copy mongodb key file from master to mongodb_repl
+  command: scp "{{ mongo_key_file }}" root@"{{ groups['mongodb_repl'][0] }}":"{{ mongo_key_file }}"
+  delegate_to: "{{ groups['localhost'][0] }}"
+
+- name: Configure mongodb.conf for SECONDARY
+  include: mongodb_conf.yml
+
+- name: Create the file to initialize the mongod replica set
+  template:
+    src: "repset_init.js.j2"
+    dest: "/tmp/repset_init.js"
+  delegate_to: "{{ groups['course_db'][0] }}"
+
+- name: Initialize the replication set
+  shell: "/usr/bin/mongo /tmp/repset_init.js"
+  delegate_to: "{{ groups['course_db'][0] }}"
+
+

@@ -1,7 +1,26 @@
 ---
-- name: Cluster MySQL
-  hosts: user_db
+#- name: Cluster MySQL
+#  hosts: user_db
+#  vars_files:
+#    - ../server_vars.yml
+#  roles:
+#    - mysql_cluster
+
+- name: Install mongodb on SECONDARY
+  hosts: mongodb_repl
+  become: true
   vars_files:
-    - ../server_vars.yml
+    - "../server_vars.yml"
+    - "/var/tmp/configuration/playbooks/roles/common_vars/defaults/main.yml"
   roles:
-    - mysql_cluster
+    - { role: /var/tmp/configuration/playbooks/roles/mongo_2_6/ }
+
+- name: Cluster MongoDB
+  hosts: course_db
+  become: true
+  gather_facts: true
+  vars_files:
+    - "../server_vars.yml"
+    - "/var/tmp/configuration/playbooks/roles/common_vars/defaults/main.yml"
+  roles:
+    - mongodb_cluster

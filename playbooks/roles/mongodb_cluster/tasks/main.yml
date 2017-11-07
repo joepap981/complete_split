@@ -1,0 +1,43 @@
+---
+#adapted from edx configuration
+
+#Create key file from PRIMARY and copy it to SECONDARY
+
+- name: Create mongodb key file
+  raw: openssl rand -base64 741 > "{{ mongo_key_file }}"
+
+- name: Configure security for key file
+  file:
+    dest: "{{ mongo_key_file }}"
+    mode: "0600"
+    owner: mongodb
+    group: mongodb
+
+- name: Configure mongodb.conf for PRIMARY
+  include: mongodb_conf.yml
+
+#reuse add_secondary.yml to add more secondary servers
+- name: Add SECONDARY
+  include: add_secondary.yml
+  delegate_to: "{{ groups['mongodb_repl'][0] }}"
+
+- name: Create the file to initialize the mongod replica set
+  template:
+    src: "repset_init.js.j2"
+    dest: "/tmp/repset_init.js"
+
+- name: Initialize the replication set
+  shell: "/usr/bin/mongo /tmp/repset_init.js"
+
+- name: Create a mongodb user
+  mongodb_user:
+    database: "{{ item.database }}"
+    login_user: "{{ MONGO_ADMIN_USER }}"
+    login_password: "{{ MONGO_ADMIN_PASSWORD }}"
+    name: "{{ item.user }}"
+    password: "{{ item.password }}"
+    roles: "{{ item.roles }}"
+    state: present
+    replica_set: "{{ mongo_repl_set }}"
+  with_items: "{{ MONGO_USERS }}"
+
