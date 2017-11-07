@@ -12,4 +12,4 @@ sudo bash requirements/ansible-bootstrap.sh
 sudo bash requirements/sandbox.sh
 
 #Configure SSH Settings
-ansible-playbook -inventory.ini playbooks/setup.yml
+sudo ansible-playbook -i inventory.ini playbooks/setup.yml
