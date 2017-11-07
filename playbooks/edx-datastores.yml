@@ -18,18 +18,18 @@
     - "/var/tmp/configuration/playbooks/roles/ecomworker/defaults/main.yml"
   roles:
     # This install mysql and creates users.
-#    - role: memcache
-#    - role: edxlocal
-#    - role: edx_ansible
-#    - role: datadog
-#      when: COMMON_ENABLE_DATADOG
-#    - role: splunkforwarder
-#      when: COMMON_ENABLE_SPLUNKFORWARDER
-#    - role: newrelic
-#      when: COMMON_ENABLE_NEWRELIC
+    - role: memcache
+    - role: edxlocal
+    - role: edx_ansible
+    - role: datadog
+      when: COMMON_ENABLE_DATADOG
+    - role: splunkforwarder
+      when: COMMON_ENABLE_SPLUNKFORWARDER
+    - role: newrelic
+      when: COMMON_ENABLE_NEWRELIC
      - { role: ~/complete_split/playbooks/roles/address_binding }  
-#  tasks:
-#    - include: create_mysql_users.yml
+  tasks:
+    - include: create_mysql_users.yml
 
 - name: Setting up course database
   hosts: course_db
