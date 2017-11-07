@@ -13,13 +13,16 @@
     owner: mongodb
     group: mongodb
 
+- name: Copy mongodb key file from course_db to master
+  command: scp root@"{{ groups['course_db'][0] }}":"{{ mongo_key_file }}" "{{ mongo_key_file }}"
+  delegate_to: "{{ groups['localhost'][0] }}"
+
 - name: Configure mongodb.conf for PRIMARY
   include: mongodb_conf.yml
 
 #reuse add_secondary.yml to add more secondary servers
 - name: Add SECONDARY
   include: add_secondary.yml
-  delegate_to: "{{ groups['mongodb_repl'][0] }}"
 
 - name: Create the file to initialize the mongod replica set
   template:
