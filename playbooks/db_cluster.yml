@@ -1,10 +1,10 @@
 ---
-#- name: Cluster MySQL
-#  hosts: user_db
-#  vars_files:
-#    - ../server_vars.yml
-#  roles:
-#    - mysql_cluster
+- name: Cluster MySQL
+  hosts: user_db
+  vars_files:
+    - ../server_vars.yml
+  roles:
+    - mysql_cluster
 
 - name: Install mongodb on SECONDARY
   hosts: mongodb_repl

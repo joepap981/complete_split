@@ -1,0 +1,37 @@
+---
+- name: Install Postfix
+  apt:
+    name: postfix
+    state: present
+
+- name: Stop mysql service
+  service:
+    name: mysql
+    state: stopped
+
+- name: Copy configuration template
+  template:
+    src: "mysqld.cnf.j2"
+    dest: "/etc/mysql/mysql.conf.d/mysqld.cnf"
+    backup: yes
+
+- name: Start mySQL
+  service:
+    name: mysql
+    state: started
+
+- name: Stop memcached service
+  service:
+    name: memcached
+    state: stopped
+
+- name: Copy configuration template
+  template:
+    src: "memcached.conf.j2"
+    dest: "/etc/memcached.conf"
+    backup: yes
+
+- name: Start memcached service
+  service:
+    name: memcached
+    state: started
