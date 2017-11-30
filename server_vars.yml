@@ -10,32 +10,6 @@ EDXAPP_CMS_SITE_NAME: 'localhost'
 EDXAPP_STUDIO_NAME: 'Studio'
 EDXAPP_STUDIO_SHORT_NAME: 'Studio'
 
-#MySQL Authentication settings
-EDXAPP_MYSQL_DB_NAME: 'edxapp'
-EDXAPP_MYSQL_USER: 'edxapp001'
-EDXAPP_MYSQL_PASSWORD: 'password'
-
-XQUEUE_MYSQL_DB_NAME: 'xqueue'
-XQUEUE_MYSQL_USER: 'xqueue001'
-XQUEUE_MYSQL_PASSWORD: 'password'
-
-COMMON_MYSQL_READ_ONLY_USER: 'read_only'
-COMMON_MYSQL_READ_ONLY_PASS: 'password'
-
-COMMON_MYSQL_ADMIN_USER: 'admin'
-COMMON_MYSQL_ADMIN_PASS: 'password'
-
-COMMON_MYSQL_MIGRATE_USER: 'migrate'
-COMMON_MYSQL_MIGRATE_PASS: 'password'
-
-#MongoDB Authentication settings
-
-EDXAPP_MONGO_PASSWORD: 'password'
-EDXAPP_MONGO_PORT: 27017
-EDXAPP_MONGO_USER: 'edxapp'
-EDXAPP_MONGO_DB_NAME: 'edxapp'
-EDXAPP_MONGO_USE_SSL: False
-
 #SMTP settings for gmail
 EDXAPP_EMAIL_BACKEND: 'django.core.mail.backends.smtp.EmailBackend'
 EDXAPP_EMAIL_HOST: 'smtp.gmail.com'
@@ -74,14 +48,8 @@ EDXAPP_PRESS_EMAIL: 'press@example.com'
 #SSL Use (default : "{{ EDXAPP_LMS_BASE_SCHEME | default('https') }}://{{ EDXAPP_LMS_BASE }}") """httpS"
 EDXAPP_LMS_ROOT_URL: "{{ EDXAPP_LMS_BASE_SCHEME | default('http') }}://{{ EDXAPP_LMS_BASE }}"
 
-#mySQL replication check
-MYSQL_SLAVE_USER: 'slave'
-MYSQL_SLAVE_PASSWORD: 'password'
-
 #mongoDB replication check
 MONGO_BIND_IP: 0.0.0.0
-MONGO_ADMIN_USER: 'admin'
-MONGO_ADMIN_PASSWORD: 'password'
 
 mongo_repl_set: rs0
 MONGO_AUTH: true
